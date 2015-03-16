@@ -1,3 +1,7 @@
+Version 1.0.3-ONIE
+
+    - Removed OpenSSL requirement (disabled)
+
 Version Next
 
     - Display symlink, modification time, and file type changes

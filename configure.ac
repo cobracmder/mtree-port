@@ -29,15 +29,12 @@ AC_PROG_INSTALL
 AC_PROG_CC
 
 # Check for libcrypto library
-AC_CHECK_LIB(crypto, CRYPTO_thread_id,,)
+#AC_CHECK_LIB(crypto, CRYPTO_thread_id,,)
 
 # Check for required header files
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h err.h errno.h fcntl.h fnmatch.h fts.h grp.h limits.h pwd.h signal.h stdarg.h stddef.h stdint.h stdio.h stdlib.h string.h time.h unistd.h sys/cdefs.h sys/param.h sys/queue.h sys/stat.h sys/time.h sys/types.h, [],
         [AC_MSG_ERROR([required header file '$ac_header' missing])])
-
-# Check for optional header files
-AC_CHECK_HEADERS(openssl/md5.h openssl/sha.h openssl/ripemd.h,,)
 
 # Check for optional functions
 AC_CHECK_FUNCS(getmode getline,,)

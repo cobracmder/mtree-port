@@ -82,14 +82,6 @@ shownode(NODE *n, int f, char const *path)
                 else
                         printf(" uname=%s", pw->pw_name);
         }
-        if (f & F_MD5)
-                printf(" md5digest=%s", n->md5digest);
-        if (f & F_SHA1)
-                printf(" sha1digest=%s", n->sha1digest);
-        if (f & F_RMD160)
-                printf(" rmd160digest=%s", n->rmd160digest);
-        if (f & F_SHA256)
-                printf(" sha256digest=%s", n->sha256digest);
         if (f & F_FLAGS)
                 printf(" flags=%s", flags_to_string(n->st_flags));
         printf("\n");
@@ -162,14 +154,6 @@ compare_nodes(NODE *n1, NODE *n2, char const *path)
                 differs |= F_UID;
         if (FF(n1, n2, F_UNAME, st_uid))
                 differs |= F_UNAME;
-        if (FS(n1, n2, F_MD5, md5digest))
-                differs |= F_MD5;
-        if (FS(n1, n2, F_SHA1, sha1digest))
-                differs |= F_SHA1;
-        if (FS(n1, n2, F_RMD160, rmd160digest))
-                differs |= F_RMD160;
-        if (FS(n1, n2, F_SHA256, sha256digest))
-                differs |= F_SHA256;
         if (FF(n1, n2, F_FLAGS, st_flags))
                 differs |= F_FLAGS;
         if (differs) {

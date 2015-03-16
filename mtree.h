@@ -50,10 +50,6 @@ typedef struct _node {
         off_t   st_size;                        /* size */
         struct timespec st_mtimespec;           /* last modification time */
         u_long  cksum;                          /* check sum */
-        char    *md5digest;                     /* MD5 digest */
-        char    *sha1digest;                    /* SHA-1 digest */
-        char    *sha256digest;                  /* SHA-256 digest */
-        char    *rmd160digest;                  /* RIPEMD160 digest */
         char    *slink;                         /* symbolic link reference */
         uid_t   st_uid;                         /* uid */
         gid_t   st_gid;                         /* gid */
@@ -77,13 +73,9 @@ typedef struct _node {
 #define F_UID   0x1000                          /* uid */
 #define F_UNAME 0x2000                          /* user name */
 #define F_VISIT 0x4000                          /* file visited */
-#define F_MD5   0x8000                          /* MD5 digest */
 #define F_NOCHANGE 0x10000                      /* If owner/mode "wrong", do */
                                                 /* not change */
-#define F_SHA1  0x20000                         /* SHA-1 digest */
-#define F_RMD160 0x40000                        /* RIPEMD160 digest */
 #define F_FLAGS 0x80000                         /* file flags */
-#define F_SHA256        0x100000                                /* SHA-256 digest */
 #define F_OPT   0x200000                        /* existence optional */
         u_int   flags;                          /* items set */
 

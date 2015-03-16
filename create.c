@@ -46,15 +46,6 @@ static char sccsid[] = "@(#)create.c    8.1 (Berkeley) 6/6/93";
 #include <fcntl.h>
 #include <fts.h>
 #include <grp.h>
-#ifdef HAVE_OPENSSL_MD5_H
-#include <openssl/md5.h>
-#endif
-#ifdef HAVE_OPENSSL_SHA_H
-#include <openssl/sha.h>
-#endif
-#ifdef HAVE_OPENSSL_RIPEMD_H
-#include <openssl/ripemd.h>
-#endif
 #include <pwd.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -222,46 +213,6 @@ statf(int indent, FTSENT *p)
                 (void)close(fd);
                 output(indent, &offset, "cksum=%lu", (unsigned long)val);
         }
-#ifdef HAVE_OPENSSL_MD5_H
-        if (keys & F_MD5 && S_ISREG(p->fts_statp->st_mode)) {
-                char *digest, buf[33];
-
-                digest = MD5_File(p->fts_accpath, buf);
-                if (!digest)
-                        err(1, "%s", p->fts_accpath);
-                output(indent, &offset, "md5digest=%s", digest);
-        }
-#endif /* HAVE_OPENSSL_MD5_H */
-#ifdef HAVE_OPENSSL_SHA_H
-        if (keys & F_SHA1 && S_ISREG(p->fts_statp->st_mode)) {
-                char *digest, buf[41];
-
-                digest = SHA1_File(p->fts_accpath, buf);
-                if (!digest)
-                        err(1, "%s", p->fts_accpath);
-                output(indent, &offset, "sha1digest=%s", digest);
-        }
-#endif /* HAVE_OPENSSL_SHA_H */
-#ifdef HAVE_OPENSSL_RIPEMD_H
-        if (keys & F_RMD160 && S_ISREG(p->fts_statp->st_mode)) {
-                char *digest, buf[41];
-
-                digest = RIPEMD160_File(p->fts_accpath, buf);
-                if (!digest)
-                        err(1, "%s", p->fts_accpath);
-                output(indent, &offset, "ripemd160digest=%s", digest);
-        }
-#endif /* HAVE_OPENSSL_RIPEMD_H */
-#ifdef HAVE_OPENSSL_SHA_H
-        if (keys & F_SHA256 && S_ISREG(p->fts_statp->st_mode)) {
-                char *digest, buf[65];
-
-                digest = SHA256_File(p->fts_accpath, buf);
-                if (!digest)
-                        err(1, "%s", p->fts_accpath);
-                output(indent, &offset, "sha256digest=%s", digest);
-        }
-#endif /* HAVE_OPENSSL_SHA_H */
         if (keys & F_SLINK &&
             (p->fts_info == FTS_SL || p->fts_info == FTS_SLNONE))
                 output(indent, &offset, "link=%s", rlink(p->fts_accpath));

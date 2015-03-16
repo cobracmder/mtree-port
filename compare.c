@@ -46,15 +46,6 @@ static char sccsid[] = "@(#)compare.c   8.1 (Berkeley) 6/6/93";
 #include <errno.h>
 #include <fcntl.h>
 #include <fts.h>
-#ifdef HAVE_OPENSSL_MD5_H
-#include <openssl/md5.h>
-#endif
-#ifdef HAVE_OPENSSL_SHA_H
-#include <openssl/sha.h>
-#endif
-#ifdef HAVE_OPENSSL_RIPEMD_H
-#include <openssl/ripemd.h>
-#endif
 #include <stdint.h>
 #include <stdio.h>
 #include <time.h>
@@ -247,79 +238,6 @@ typeerr:                LABEL;
                 tab = "\t";
         }
 #endif
-#ifdef HAVE_OPENSSL_MD5_H
-        if (s->flags & F_MD5) {
-                char *new_digest, buf[33];
-
-                new_digest = MD5_File(p->fts_accpath, buf);
-                if (!new_digest) {
-                        LABEL;
-                        printf("%sMD5: %s: %s\n", tab, p->fts_accpath,
-                               strerror(errno));
-                        tab = "\t";
-                } else if (strcmp(new_digest, s->md5digest)) {
-                        LABEL;
-                        printf("%sMD5 expected %s found %s\n", tab, s->md5digest,
-                               new_digest);
-                        tab = "\t";
-                }
-        }
-#endif /* HAVE_OPENSSL_MD5_H */
-#ifdef HAVE_OPENSSL_SHA_H
-        if (s->flags & F_SHA1) {
-                char *new_digest, buf[41];
-
-                new_digest = SHA1_File(p->fts_accpath, buf);
-                if (!new_digest) {
-                        LABEL;
-                        printf("%sSHA-1: %s: %s\n", tab, p->fts_accpath,
-                               strerror(errno));
-                        tab = "\t";
-                } else if (strcmp(new_digest, s->sha1digest)) {
-                        LABEL;
-                        printf("%sSHA-1 expected %s found %s\n",
-                               tab, s->sha1digest, new_digest);
-                        tab = "\t";
-                }
-        }
-#endif /* HAVE_OPENSSL_SHA_H */
-#ifdef HAVE_OPENSSL_RIPEMD_H
-        if (s->flags & F_RMD160) {
-                char *new_digest, buf[41];
-
-                new_digest = RIPEMD160_File(p->fts_accpath, buf);
-                if (!new_digest) {
-                        LABEL;
-                        printf("%sRIPEMD160: %s: %s\n", tab,
-                               p->fts_accpath, strerror(errno));
-                        tab = "\t";
-                } else if (strcmp(new_digest, s->rmd160digest)) {
-                        LABEL;
-                        printf("%sRIPEMD160 expected %s found %s\n",
-                               tab, s->rmd160digest, new_digest);
-                        tab = "\t";
-                }
-        }
-#endif /* HAVE_OPENSSL_RIPEMD_H */
-#ifdef HAVE_OPENSSL_SHA_H
-        if (s->flags & F_SHA256) {
-                char *new_digest, buf[65];
-
-                new_digest = SHA256_File(p->fts_accpath, buf);
-                if (!new_digest) {
-                        LABEL;
-                        printf("%sSHA-256: %s: %s\n", tab, p->fts_accpath,
-                               strerror(errno));
-                        tab = "\t";
-                } else if (strcmp(new_digest, s->sha256digest)) {
-                        LABEL;
-                        printf("%sSHA-256 expected %s found %s\n",
-                               tab, s->sha256digest, new_digest);
-                        tab = "\t";
-                }
-        }
-#endif /* HAVE_OPENSSL_SHA_H */
-
         if (s->flags & F_SLINK &&
             strcmp(cp = rlink(p->fts_accpath), s->slink)) {
                 LABEL;

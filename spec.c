@@ -186,26 +186,6 @@ set(char *t, NODE *ip)
                                 errx(1, "line %d: invalid checksum %s",
                                 lineno, val);
                         break;
-                case F_MD5:
-                        ip->md5digest = strdup(val);
-                        if(!ip->md5digest)
-                                errx(1, "strdup");
-                        break;
-                case F_SHA1:
-                        ip->sha1digest = strdup(val);
-                        if(!ip->sha1digest)
-                                errx(1, "strdup");
-                        break;
-                case F_SHA256:
-                        ip->sha256digest = strdup(val);
-                        if(!ip->sha256digest)
-                                errx(1, "strdup");
-                        break;
-                case F_RMD160:
-                        ip->rmd160digest = strdup(val);
-                        if(!ip->rmd160digest)
-                                errx(1, "strdup");
-                        break;
                 case F_FLAGS:
                         if (strcmp("none", val) == 0)
                                 ip->st_flags = 0;

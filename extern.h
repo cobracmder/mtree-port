@@ -60,17 +60,6 @@ mode_t getmode(const void *bbox, mode_t omode);
 void *setmode(const char *p);
 #endif
 
-#ifdef HAVE_OPENSSL_MD5_H
-char * MD5_File(const char *filename, char *result);
-#endif
-#ifdef HAVE_OPENSSL_SHA_H
-char * SHA1_File(const char *filename, char *result);
-char * SHA256_File(const char *filename, char *result);
-#endif
-#ifdef HAVE_OPENSSL_RIPEMD_H
-char * RIPEMD160_File(const char *filename, char *result);
-#endif
-
 extern int ftsoptions;
 extern u_int keys;
 extern int lineno;

@@ -1,0 +1,15 @@
+.deps
+Makefile
+Makefile.in
+*.m4
+*.cache
+config.h
+config.h.in
+*.log
+*.status
+configure
+scripts
+stamp-h1
+tags
+*.o
+mtree

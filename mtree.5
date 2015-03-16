@@ -151,39 +151,6 @@ Ignore any file hierarchy below this file.
 The file group as a numeric value.
 .It Cm gname
 The file group as a symbolic name.
-.It Cm md5
-The MD5 message digest of the file.
-.It Cm md5digest
-A synonym for
-.Cm md5 .
-.It Cm sha1
-The
-.Tn FIPS
-160-1
-.Pq Dq Tn SHA-1
-message digest of the file.
-.It Cm sha1digest
-A synonym for
-.Cm sha1 .
-.It Cm sha256
-The
-.Tn FIPS
-180-2
-.Pq Dq Tn SHA-256
-message digest of the file.
-.It Cm sha256digest
-A synonym for
-.Cm sha256 .
-.It Cm ripemd160digest
-The
-.Tn RIPEMD160
-message digest of the file.
-.It Cm rmd160
-A synonym for
-.Cm ripemd160digest .
-.It Cm rmd160digest
-A synonym for
-.Cm ripemd160digest .
 .It Cm mode
 The current file's permissions as a numeric (octal) or symbolic
 value.
@@ -248,24 +215,6 @@ The
 .Nm
 utility appeared in
 .Bx 4.3 Reno .
-The
-.Tn MD5
-digest capability was added in
-.Fx 2.1 ,
-in response to the widespread use of programs which can spoof
-.Xr cksum 1 .
-The
-.Tn SHA-1
-and
-.Tn RIPEMD160
-digests were added in
-.Fx 4.0 ,
-as new attacks have demonstrated weaknesses in
-.Tn MD5 .
-The
-.Tn SHA-256
-digest was added in
-.Fx 6.0 .
 Support for file flags was added in
 .Fx 4.0 ,
 and mostly comes from

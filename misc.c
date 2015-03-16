@@ -44,16 +44,6 @@ static char sccsid[] = "@(#)misc.c      8.1 (Berkeley) 6/6/93";
 #include <stdio.h>
 #include <unistd.h>
 
-#ifdef HAVE_OPENSSL_MD5_H
-#include <openssl/md5.h>
-#endif
-#ifdef HAVE_OPENSSL_SHA_H
-#include <openssl/sha.h>
-#endif
-#ifdef HAVE_OPENSSL_RIPEMD_H
-#include <openssl/ripemd.h>
-#endif
-
 #include "mtree.h"
 #include "extern.h"
 
@@ -73,20 +63,10 @@ static KEY keylist[] = {
         {"gname",       F_GNAME,        NEEDVALUE},
         {"ignore",      F_IGN,          0},
         {"link",        F_SLINK,        NEEDVALUE},
-#ifdef HAVE_OPENSSL_MD5_H
-        {"md5digest",   F_MD5,          NEEDVALUE},
-#endif
         {"mode",        F_MODE,         NEEDVALUE},
         {"nlink",       F_NLINK,        NEEDVALUE},
         {"nochange",    F_NOCHANGE,     0},
         {"optional",    F_OPT,          0},
-#ifdef HAVE_OPENSSL_RIPEMD_H
-        {"ripemd160digest", F_RMD160,   NEEDVALUE},
-#endif
-#ifdef HAVE_OPENSSL_SHA_H
-        {"sha1digest",  F_SHA1,         NEEDVALUE},
-        {"sha256digest",        F_SHA256,               NEEDVALUE},
-#endif
         {"size",        F_SIZE,         NEEDVALUE},
         {"time",        F_TIME,         NEEDVALUE},
         {"type",        F_TYPE,         NEEDVALUE},
@@ -133,44 +113,4 @@ flags_to_string(u_long fflags)
 
         return string;
 }
-
-#define DIGEST_FILE(PREFIX, CTX, LENGTH)                        \
-char *                                                          \
-PREFIX ## _File(const char *filename, char *result)              \
-{                                                               \
-    u_char md[LENGTH];                                          \
-    u_char buf[1024];                                           \
-    CTX ctx;                                                    \
-    FILE *fp;                                                   \
-    size_t r;                                                   \
-    int i;                                                      \
-                                                                \
-    PREFIX ## _Init(&ctx);                                      \
-    if ((fp = fopen(filename, "r")) == NULL)                    \
-        return NULL;                                            \
-    while ((r = fread(buf, 1, sizeof(buf), fp)) != 0)           \
-        PREFIX ## _Update(&ctx, buf, r);                        \
-    if (ferror(fp)) {                                           \
-        fclose(fp);                                             \
-        return NULL;                                            \
-    }                                                           \
-    fclose(fp);                                                 \
-    PREFIX ## _Final(md, &ctx);                                 \
-    for (i = 0; i < LENGTH; i++)                                \
-        sprintf(result + 2 * i, "%02x", md[i]);                 \
-    return result;                                              \
-}
-
-#ifdef HAVE_OPENSSL_MD5_H
-DIGEST_FILE(MD5, MD5_CTX, MD5_DIGEST_LENGTH);
-#endif
-
-#ifdef HAVE_OPENSSL_SHA_H
-DIGEST_FILE(SHA1, SHA_CTX, SHA_DIGEST_LENGTH);
-DIGEST_FILE(SHA256, SHA256_CTX, SHA256_DIGEST_LENGTH);
-#endif
-
-#ifdef HAVE_OPENSSL_RIPEMD_H
-DIGEST_FILE(RIPEMD160, RIPEMD160_CTX, RIPEMD160_DIGEST_LENGTH);
-#endif
 
